@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body{
+            margin: 0;
+            font-family: arial;
+            background: rgb(36, 37, 37);
+            color: whitesmoke;
+        }
+
+        header{
+            display: flex;
+            flex-direction: column;
+        }
+
+        header section{
+            display: flex;
+            flex-direction: column;
+        }
+
+        #btn{
+            width: 40px;
+            height: 34px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        #btn div{
+            height: 5px;
+            background: whitesmoke;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        #sidebar{
+            width: 220px;
+            height: 100vh;
+            background: rgb(25, 25, 25);
+            color: whitesmoke;
+            position: fixed;
+            top: 0;
+            right: -220px;
+            transition: 0.4s;
+            padding-top: 70px;
+            display: flex;
+            flex-direction: column;
+            z-index: 999;
+        }
+
+        #sidebar h1{
+            position: absolute;
+            left: 15px;
+            top: 15px;
+            font-size: 1.4em;
+        }
+
+        #sidebar a{
+            text-decoration: none;
+            color: whitesmoke;
+            display: block;
+            padding: 18px 20px;
+            font-size: 1.1em;
+        }
+
+        #sidebar a:hover{
+            background: rgb(32, 30, 30);
+        }
+
+        #sidebar.active{
+            right: 0;
+        }
+
+        main{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 60px;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        /* Title section */
+        #title{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 50px;
+            margin-bottom: 5rem;
+            flex-wrap: wrap;
+            padding: 0 1rem;
+        }
+
+        #title-left{
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            max-width: 600px;
+        }
+
+        #title-left h1{
+            font-size: 4.5em;
+            margin: 0.2em 0;
+        }
+
+        #title-left h2{
+            font-size: 2em;
+            margin: 0.2em 0;
+            color: #aaa;
+        }
+
+        #title-left p{
+            font-size: 1.2em;
+            font-style: italic;
+            margin-bottom: 1em;
+            line-height: 1.5;
+        }
+
+        #title-right img{
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            border: 3px solid whitesmoke;
+            object-fit: cover;
+        }
+
+        #direct-contact-icon{
+            display: flex;
+            gap: 18px;
+            margin-top: 1.5em;
+            flex-wrap: wrap;
+        }
+
+        #direct-contact-icon a img{
+            width: 38px;
+            height: 38px;
+            transition: transform 0.3s;
+        }
+
+        #direct-contact-icon a img:hover{
+            transform: scale(1.25);
+        }
+
+        /* Sections */
+        #information, #experience{
+            width: 90%;
+            max-width: 1000px;
+            background: rgb(30, 30, 30);
+            padding: 2.5em;
+            border-radius: 15px;
+            margin-bottom: 4em;
+            line-height: 1.7em;
+        }
+
+        #experience{
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            justify-content: center;
+            padding: 2em 1em;
+        }
+
+        .experience-card{
+            background: rgb(25, 25, 25);
+            border-radius: 12px;
+            width: 280px;
+            padding: 1.8em;
+            transition: transform 0.3s;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+        }
+
+        .experience-card:hover{
+            transform: translateY(-8px);
+        }
+
+        .experience-card h3{
+            margin: 0.5em 0;
+            font-size: 1.35em;
+            color: #fff;
+        }
+
+        .experience-card p{
+            font-size: 1em;
+            color: #ccc;
+            margin: 0.5em 0;
+        }
+
+        /* Projects */
+        #categoires-project{
+            width: 90%;
+            max-width: 1200px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+            padding: 2rem 0;
+        }
+
+        #categoires-project > div{
+            background: rgb(25, 25, 25);
+            border-radius: 12px;
+            overflow: hidden;
+            width: 300px;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+        }
+
+        #categoires-project > div:hover{
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+        }
+
+        #categoires-project img{
+            width: 100%;
+            height: 170px;
+            object-fit: cover;
+            transition: transform 0.4s;
+        }
+
+        #categoires-project > div:hover img{
+            transform: scale(1.05);
+        }
+
+        #txt{
+            padding: 1.4em;
+        }
+
+        #txt h2{
+            margin: 0 0 0.6em 0;
+            font-size: 1.45em;
+        }
+
+        #txt p{
+            margin: 0;
+            color: #ddd;
+            font-size: 0.98em;
+            line-height: 1.5;
+        }
+
+        footer{
+            margin-top: 8em;
+            width: 100%;
+            background: rgb(25, 25, 25);
+            padding: 4em 2em;
+        }
+
+        footer section{
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 3em;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        footer h1{
+            font-size: 1.5em;
+            margin-bottom: 1em;
+            text-align: center;
+        }
+
+        #contact-links{
+            display: flex;
+            gap: 25px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        #contact-links a{
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: whitesmoke;
+            text-decoration: none;
+            font-size: 1.15em;
+            transition: color 0.3s;
+        }
+
+        #contact-links a:hover{
+            color: #00d4ff;
+        }
+
+        #contact-links img{
+            width: 32px;
+            height: 32px;
+        }
+
+        /* RESPONSIVE DESIGN - Fully Auto for All Screens */
+        @media (max-width: 1024px) {
+            #title-left h1 { font-size: 3.8em; }
+            #title { gap: 30px; }
+        }
+
+        @media (max-width: 768px) {
+            #title {
+                flex-direction: column;
+                text-align: center;
+            }
+            #title-left {
+                align-items: center;
+                text-align: center;
+            }
+            #title-left h1 { font-size: 3.2em; }
+            #title-left h2 { font-size: 1.7em; }
+            #title-right img { width: 180px; height: 180px; }
+
+            .experience-card, #categoires-project > div {
+                width: 90%;
+                max-width: 340px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #btn { width: 36px; height: 30px; right: 15px; top: 15px; }
+            #sidebar { width: 100%; right: -100%; }
+
+            #title-left h1 { font-size: 2.8em; }
+            #title-left h2 { font-size: 1.5em; }
+            #title-left p { font-size: 1.1em; }
+            #title-right img { width: 150px; height: 150px; }
+
+            #direct-contact-icon a img { width: 34px; height: 34px; }
+
+            #information, #experience {
+                padding: 2em 1.5em;
+            }
+
+            footer {
+                padding: 3em 1em;
+            }
+
+            #contact-links a {
+                font-size: 1em;
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <section>
+            <div id="btn" onclick="toggle()">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+
+            <nav id="sidebar">
+                <h1>Menu</h1>
+                <a href="#title">Home</a>
+                <a href="#information">About</a>
+                <a href="#experience">Experience</a>
+                <a href="#categoires-project">Projects</a>
+                <a href="#contact">Contact</a>
+            </nav>
+        </section>
+    </header>
+
+    <main>
+        <section id="title">
+            <div id="title-left">
+                <h1>John</h1>
+                <h2>Junior Developer</h2>
+                <p>"Creative developer with passion for web design, arranging data files, fixing codes, drawing, and understanding complex problems"</p>
+                <div id="direct-contact-icon">
+                    <a href="https://github.com/"><img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="GitHub"></a>
+                    <a href="https://www.facebook.com/"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook"></a>
+                    <a href="https://discord.com/"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png" alt="Discord"></a>
+                    <a href="mailto:example@gmail.com"><img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" alt="Email"></a>
+                </div>
+            </div>
+            <div id="title-right">
+                <img src="https://via.placeholder.com/220/333333/ffffff?text=John" alt="Profile Picture">
+            </div>
+        </section>
+
+        <section id="information">
+            <h1>About Me</h1>
+            <p>Hello! I'm John, a junior developer specializing in web development and UI/UX design. I enjoy turning ideas into functional and visually appealing web applications. I have experience with HTML, CSS, JavaScript, and modern frameworks.</p>
+            <p>I love arranging data files, fixing codes, drawing, and understanding complex problems. I'm constantly learning new technologies and exploring creative solutions to build professional and engaging user experiences.</p>
+        </section>
+
+        <section id="experience">
+            <h1>Experience & Skills</h1>
+            <div class="experience-card">
+                <h3>Web Developer</h3>
+                <p>2023 – Present</p>
+                <p>Building responsive websites & web apps using HTML, CSS, and JavaScript.</p>
+            </div>
+            <div class="experience-card">
+                <h3>Data & Admin Specialist</h3>
+                <p>2022 – Present</p>
+                <p>Organizing digital files, managing databases, and streamlining workflows.</p>
+            </div>
+            <div class="experience-card">
+                <h3>Digital Content Editor</h3>
+                <p>2021 – Present</p>
+                <p>Professional photo/video editing and document formatting for clients.</p>
+            </div>
+            <div class="experience-card">
+                <h3>Artist & Freelancer</h3>
+                <p>2020 – Present</p>
+                <p>Traditional & digital painting, freelance commissions, creative direction.</p>
+            </div>
+        </section>
+
+        <section id="categoires-project">
+            <div>
+                <img src="https://via.placeholder.com/300x170/333333/ffffff?text=Portfolio" alt="Portfolio">
+                <div id="txt">
+                    <h2>Personal Portfolio</h2>
+                    <p>Clean, responsive portfolio showcasing my journey and projects.</p>
+                </div>
+            </div>
+            <div>
+                <img src="https://via.placeholder.com/300x170/333333/ffffff?text=Task+App" alt="Task Manager">
+                <div id="txt">
+                    <h2>Task Manager App</h2>
+                    <p>Full-featured to-do app with user authentication and local storage.</p>
+                </div>
+            </div>
+            <div>
+                <img src="https://via.placeholder.com/300x170/333333/ffffff?text=Blog" alt="Blog Platform">
+                <div id="txt">
+                    <h2>Blog Platform</h2>
+                    <p>Modern blogging site with categories, comments, and dark mode.</p>
+                </div>
+            </div>
+            <div>
+                <img src="https://via.placeholder.com/300x170/333333/ffffff?text=E-commerce" alt="E-commerce">
+                <div id="txt">
+                    <h2>E-commerce Store</h2>
+                    <p>Fully functional online shop with cart and payment simulation.</p>
+                </div>
+            </div>
+            <div>
+                <img src="https://via.placeholder.com/300x170/333333/ffffff?text=Weather+App" alt="Weather App">
+                <div id="txt">
+                    <h2>Weather Dashboard</h2>
+                    <p>Real-time weather app using OpenWeatherMap API.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer id="contact">
+        <section>
+            <div id="policy">
+                <h1>© 2025 John • All Rights Reserved</h1>
+            </div>
+
+            <div>
+                <h1>Let's Connect</h1>
+                <div id="contact-links">
+                    <a href="https://github.com/">
+                        <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="GitHub"> GitHub
+                    </a>
+                    <a href="https://www.facebook.com/">
+                        <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook"> Facebook
+                    </a>
+                    <a href="https://discord.com/">
+                        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png" alt="Discord"> Discord
+                    </a>
+                    <a href="mailto:example@gmail.com">
+                        <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" alt="Email"> example@gmail.com
+                    </a>
+                </div>
+            </div>
+        </section>
+    </footer>
+
+    <script>
+        function toggle() {
+            let sidebar = document.getElementById("sidebar");
+            sidebar.classList.toggle("active"); 
+        }
+    </script>
+</body>
+</html>
